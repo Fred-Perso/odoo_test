@@ -61,9 +61,9 @@ def calcul_prix(produit, quantite):
 		
 	#somme de tout les prix unitaitaires qui va. remplacer la valeur du prix unitaire dans odoo
 
-	prix_unitaire = sum(prix_unitaire)
+	prix_uni = sum(prix_unitaire)
 	
-	return prix_unitaire
+	return prix_uni
 
 for record in self:
 	produit = record['name']
