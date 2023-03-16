@@ -69,7 +69,7 @@ def calcul_prix(produit, quantite):
 	else:
 		prix_unitaire[0] = 0
 
-	# Attribut supports
+	# Attribut support
 		
 	if "80gr" in str(produit):
 		prix_unitaire[1] = _80gr[Qt1]*coefP
@@ -107,11 +107,44 @@ def calcul_prix(produit, quantite):
 	
 	return prix_uni
 
-# Le code ci-dessous fait boucle for pour récupérer les variables dont ont a besoins
+def mise_en_forme(produit):
+    # Chercher le produit entre les parenthèses
+    start_index = produit.find("(")
+    end_index = produit.find(")")
+    if start_index == -1 or end_index == -1:
+        # Si les parenthèses ne sont pas trouvées, retourner le produit inchangé
+        return produit
+    contenu_parentheses = produit[start_index+1:end_index]
+
+    # Diviser le contenu entre les parenthèses en une liste de mots
+    mots = contenu_parentheses.split(", ")
+
+    # Récupérer les valeurs des différents paramètres
+    format = ""
+    impression = ""
+    support = ""
+    for mot in mots:
+        if "Format" in mot:
+            format = mot.replace("Format", "").strip()
+        elif "Impression" in mot:
+            impression = mot.replace("Impression", "").strip()
+        elif "Support" in mot:
+            support = mot.replace("Support", "").strip()
+
+    # Remplacer le produit initial par le produit formaté
+    produit_formate = "{}\nFormat : {}\nImpression : {}\nSupport : {}".format(produit[:start_index].strip(), format, impression, support)
+    return produit_formate
+
+
+# Le code ci-dessous fait une boucle for pour récupérer les variables dont on a besoins
 # prix est la ligne qui va récupérer le résultat de la fonction calcul_prix
+
+
 
 for record in self:
 	produit = record['name']
 	quantite = int(record['product_uom_qty'])
 	prix = calcul_prix(produit, quantite)
+	nomt = mise_en_forme(produit)
 	record['x_studio_test'] = prix
+	record['x_studio_nom_test'] = nomt
