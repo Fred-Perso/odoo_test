@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# Fonction de calcul de prix
+# Fonction de calcul du prix unitaire dans odoo
 def calcul_prix(produit, quantite):
 	
 	A4 = [0.4, 0.3, 0.2, 0.15, 0.12]
@@ -9,13 +9,12 @@ def calcul_prix(produit, quantite):
 	recto = [3, 4, 5, 6, 7]
 	quantites = [1,10, 20, 30, 40]
 	
-	# attribut_1, attribut_2, attribut_3 = produit
-	
 	prix_unitaire = [0, 0, 0]
 	
-#Tableau des coefs
+# Tableau des coefs
 	coef=[0.5,1,2]
-# on détermine le chef en fonction du format
+
+# on détermine le coef en fonction du format
 	coefP=0
 	if "A4" in str(produit):
 		coefP = coef[1]
@@ -23,7 +22,8 @@ def calcul_prix(produit, quantite):
 		coefP = coef[2]
 	elif "A5" in str(produit):
 		coefP = coef[0]
-		
+
+# on détermine la valeur du tableau quantité	
 	Qt1 = 0
 	if quantite <= 1:
 		Qt1 = 0
@@ -35,7 +35,9 @@ def calcul_prix(produit, quantite):
 		Qt1 = 3
 	else:
 		Qt1 = 4	
-		
+
+# Conditions qui vont déterminer les éléments de calcul du prix unitaire	
+
 	if "A4" in str(produit):
 		prix_unitaire[0] = A4[Qt1]*coefP
 	elif "A5" in str(produit):
@@ -57,10 +59,11 @@ def calcul_prix(produit, quantite):
 	else:
 		prix_unitaire[0] = 0
 		
-	#somme de tout les prix unitaitaires x QT(Odoo)
-	prix_total = sum(prix_unitaire)
+	#somme de tout les prix unitaitaires qui va. remplacer la valeur du prix unitaire dans odoo
+
+	prix_unitaire = sum(prix_unitaire)
 	
-	return prix_total
+	return prix_unitaire
 
 for record in self:
 	produit = record['name']
