@@ -4,7 +4,7 @@
 # Cette fonction reçois 2 arguments (valeurs) qui récupèrent depuis odoo le nom du produit et la quantité
 def calcul_prix(produit, quantite):
 	
-	A4 = [0.4, 0.3, 0.2, 0.15, 0.12]
+	base_A4 = [0.4, 0.3, 0.2, 0.15, 0.12]
 	_135gr = [0.2, 0.2, 0.1, 0.1, 0.1]
 	_170gr = [3, 4, 5, 6, 7]
 	recto = [3, 4, 5, 6, 7]
@@ -40,11 +40,11 @@ def calcul_prix(produit, quantite):
 # Conditions qui vont déterminer les éléments de calcul du prix unitaire	
 
 	if "A4" in str(produit):
-		prix_unitaire[0] = A4[Qt1]*coefP
+		prix_unitaire[0] = base_A4[Qt1]*coefP
 	elif "A5" in str(produit):
-		prix_unitaire[0] = A4[Qt1]*coefP
+		prix_unitaire[0] = base_A4[Qt1]*coefP
 	elif "A3" in str(produit):
-		prix_unitaire[0] = A4[Qt1]*coefP
+		prix_unitaire[0] = base_A4[Qt1]*coefP
 	else:
 		prix_unitaire[0] = 0
 		
