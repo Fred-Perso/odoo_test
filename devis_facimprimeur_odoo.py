@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # Fonction de calcul du prix unitaire dans odoo
+# Cette fonction reçois 2 arguments (valeurs) qui récupèrent depuis odoo le nom du produit et la quantité
 def calcul_prix(produit, quantite):
 	
 	A4 = [0.4, 0.3, 0.2, 0.15, 0.12]
@@ -64,6 +65,9 @@ def calcul_prix(produit, quantite):
 	prix_uni = sum(prix_unitaire)
 	
 	return prix_uni
+
+# Le code ci-dessous fait boucle for pour récupérer les variables dont ont a besoins
+# prix est la ligne qui va récupérer le résultat de la fonction calcul_prix
 
 for record in self:
 	produit = record['name']
