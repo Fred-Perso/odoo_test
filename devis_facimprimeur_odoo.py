@@ -9,7 +9,8 @@ def calcul_prix(produit, quantite):
 	_170gr = [3, 4, 5, 6, 7]
 	recto = [3, 4, 5, 6, 7]
 	quantites = [1,10, 20, 30, 40]
-	
+
+# Déclaration de la variable prix unitaire
 	prix_unitaire = [0, 0, 0]
 	
 # Tableau des coefs
@@ -60,7 +61,7 @@ def calcul_prix(produit, quantite):
 	else:
 		prix_unitaire[0] = 0
 		
-	#somme de tout les prix unitaitaires qui va. remplacer la valeur du prix unitaire dans odoo
+	#somme de tous les prix unitaitaires qui va remplacer la valeur du prix unitaire dans odoo
 
 	prix_uni = sum(prix_unitaire)
 	
