@@ -15,8 +15,8 @@ def calcul_prix(produit, quantite):
 	_300gr = [0.2, 0.2, 0.1, 0.1, 0.1]
 	_350gr = [0.2, 0.2, 0.1, 0.1, 0.1]
 
-	recto_quadri = [3, 4, 5, 6, 7]
-	rv_quadri = [3, 4, 5, 6, 7]
+	recto_quadri = [1.5, 4, 5, 6, 7]
+	rv_quadri = [2.5, 4, 5, 6, 7]
 	recto_nb = [3, 4, 5, 6, 7]
 	rv_nb = [3, 4, 5, 6, 7]
 
@@ -94,6 +94,12 @@ def calcul_prix(produit, quantite):
 		
 	if "recto" in str(produit) and "quadri" in str(produit):
 		prix_unitaire[2] = recto_quadri[Qt1]*coefP
+	elif "recto/verso" in str(produit) and "quadri" in str(produit):
+		prix_unitaire[2] = rv_quadri[Qt1]*coefP
+	elif "recto" in str(produit) and "NB" in str(produit):
+		prix_unitaire[2] = recto_nb[Qt1]*coefP
+	elif "recto/verso" in str(produit) and "NB" in str(produit):
+		prix_unitaire[2] = rv_nb[Qt1]*coefP
 	else:
 		prix_unitaire[0] = 0
 
@@ -139,12 +145,14 @@ def mise_en_forme(produit):
 # Le code ci-dessous fait une boucle for pour récupérer les variables dont on a besoins
 # prix est la ligne qui va récupérer le résultat de la fonction calcul_prix
 
-
-
 for record in self:
-	produit = record['name']
-	quantite = int(record['product_uom_qty'])
-	prix = calcul_prix(produit, quantite)
-	nomt = mise_en_forme(produit)
-	record['x_studio_test'] = prix
-	record['x_studio_nom_test'] = nomt
+	if record.x_studio_val_fontion == 0:
+		produit = record['name']
+		quantite = int(record['product_uom_qty'])
+		prix = calcul_prix(produit, quantite)
+		nomt = mise_en_forme(produit)
+		record['price_unit'] = prix
+		record['name'] = nomt
+	else:
+		record['x_studio_remise_suggrer_1'] = 1
+
