@@ -2,23 +2,20 @@
 
 # Fonction de calcul du prix unitaire dans odoo
 # Cette fonction reçois 2 arguments (valeurs) qui récupèrent depuis odoo le nom du produit et la quantité
-def calcul_prix(produit, quantite):
+def calcul_prix_GF(produit, quantite):
 	
-	base_A4 = [0.4, 0.3, 0.2, 0.15, 0.12]
+	base_A4 = [5, 5, 3]
 
-	_80gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_90gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_135gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_170gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_200gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_250gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_300gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_350gr = [0.2, 0.2, 0.1, 0.1, 0.1]
+	_150gr_satin = [16, 14, 12]
+	_80gr_plan = [12, 10, 5]
+	_Vinyle_monomere_dos_gris = [25, 20, 18, 16]
+	_Vinyle_monomere_dos_blanc = [25, 20, 18, 16]
+	_Vinyle_polymere_dos_gris = [30, 25, 20,18]
+	_Vinyle_polyomere_dos_blanc = [30, 25, 20,18]
+	_Bache_440gr = [28, 25, 20,18]
+	_Bache_510gr = [28, 25, 20,18]
 
 	recto_quadri = [1.5, 4, 5, 6, 7]
-	rv_quadri = [2.5, 4, 5, 6, 7]
-	recto_nb = [3, 4, 5, 6, 7]
-	rv_nb = [3, 4, 5, 6, 7]
 
 # Déclaration de la variable prix unitaire
 	prix_unitaire = [0, 0, 0]
@@ -43,11 +40,11 @@ def calcul_prix(produit, quantite):
 	Qt1 = 0
 	if quantite <= 1:
 		Qt1 = 0
-	elif quantite <= 10:
+	elif quantite <= 5:
 		Qt1 = 1
-	elif quantite <= 20:
+	elif quantite <= 10:
 		Qt1 = 2
-	elif quantite <= 30:
+	elif quantite <= 15:
 		Qt1 = 3
 	else:
 		Qt1 = 4	
@@ -149,7 +146,7 @@ for record in self:
 	if record.x_studio_val_fontion == 0:
 		produit = record['name']
 		quantite = int(record['product_uom_qty'])
-		prix = calcul_prix(produit, quantite)
+		prix = calcul_prix_GF(produit, quantite)
 		nomt = mise_en_forme(produit)
 		record['price_unit'] = prix
 		record['name'] = nomt

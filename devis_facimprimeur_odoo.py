@@ -57,15 +57,15 @@ def calcul_prix(produit, quantite):
 # Attribut formats
 
 	if "A3" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]*coefP
+		prix_unitaire[0] = base_A4[Qt1]
 	elif "A4" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]*coefP
+		prix_unitaire[0] = base_A4[Qt1]
 	elif "A5" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]*coefP
+		prix_unitaire[0] = base_A4[Qt1]
 	elif "A6" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]*coefP
+		prix_unitaire[0] = base_A4[Qt1]
 	elif "10x21" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]*coefP
+		prix_unitaire[0] = base_A4[Qt1]
 	else:
 		prix_unitaire[0] = 0
 
@@ -93,13 +93,7 @@ def calcul_prix(produit, quantite):
 	# Attribut type d'impression
 		
 	if "recto" in str(produit) and "quadri" in str(produit):
-		prix_unitaire[2] = recto_quadri[Qt1]*coefP
-	elif "recto/verso" in str(produit) and "quadri" in str(produit):
-		prix_unitaire[2] = rv_quadri[Qt1]*coefP
-	elif "recto" in str(produit) and "NB" in str(produit):
-		prix_unitaire[2] = recto_nb[Qt1]*coefP
-	elif "recto/verso" in str(produit) and "NB" in str(produit):
-		prix_unitaire[2] = rv_nb[Qt1]*coefP
+		prix_unitaire[2] = recto_quadri[Qt1]
 	else:
 		prix_unitaire[0] = 0
 
