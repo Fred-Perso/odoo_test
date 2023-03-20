@@ -1,26 +1,21 @@
 #!/usr/bin/env python3
 
-# ---------Fonction devis Atelier-----------#
-def calcul_prix(produit, quantite):
+# ---------Fonction devis livre Atelier-----------#
+def calcul_prix(produit, quantite, pages):
 	
 	base_A4 = [0.4, 0.3, 0.2, 0.15, 0.12]
 
 	_80gr = [0.2, 0.2, 0.1, 0.1, 0.1]
 	_90gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_135gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_170gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_200gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_250gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_300gr = [0.2, 0.2, 0.1, 0.1, 0.1]
-	_350gr = [0.2, 0.2, 0.1, 0.1, 0.1]
 
-	recto_quadri = [1.5, 4, 5, 6, 7]
 	rv_quadri = [2.5, 4, 5, 6, 7]
-	recto_nb = [3, 4, 5, 6, 7]
 	rv_nb = [3, 4, 5, 6, 7]
 
+
+# nombres de pages du livre
+
 # Déclaration de la variable prix unitaire
-	prix_unitaire = [0, 0, 0]
+	prix_unitaire = [0, 0, 0, 0]
 	
 # Tableau des coéficiants de tarifs en fonction du A4
 	coef=[0.3,0.4,0.5,1,2]
@@ -29,17 +24,29 @@ def calcul_prix(produit, quantite):
 	coefP=0
 	if "A4" in str(produit):
 		coefP = coef[3]
-	elif "A3" in str(produit):
-		coefP = coef[4]
 	elif "A5" in str(produit):
 		coefP = coef[2]
 	elif "A6" in str(produit):
 		coefP = coef[1]
-	elif "10x21" in str(produit):
-		coefP = coef[0]
 
-# on détermine la valeur du tableau quantité	
-	Qt1 = 0
+# on détermine la valeur du tableau quantité de pages	
+	Quantite_pages = quantite * pages
+
+	Qt1p = 0
+	if Quantite_pages <= 51:
+		Qt1p = 0
+	elif Quantite_pages <= 101:
+		Qt1p = 1
+	elif Quantite_pages <= 251:
+		Qt1p = 2
+	elif Quantite_pages <= 501:
+		Qt1p = 3
+	else:
+		Qt1p = 4	
+
+# on détermine la valeur du tableau quantité pour les autres éléments	
+
+		Qt1 = 0
 	if quantite <= 1:
 		Qt1 = 0
 	elif quantite <= 10:
@@ -55,46 +62,38 @@ def calcul_prix(produit, quantite):
 
 # Attribut formats
 
-	if "A3" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]
-	elif "A4" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]
+	if "A4" in str(produit):
+		prix_unitaire[0] = base_A4[Qt1p]*Quantite_pages
 	elif "A5" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]
+		prix_unitaire[0] = base_A4[Qt1p]*Quantite_pages
 	elif "A6" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]
-	elif "10x21" in str(produit):
-		prix_unitaire[0] = base_A4[Qt1]
+		prix_unitaire[0] = base_A4[Qt1p]*Quantite_pages
 	else:
 		prix_unitaire[0] = 0
 
 	# Attribut support
 		
 	if "80gr" in str(produit):
-		prix_unitaire[1] = _80gr[Qt1]*coefP
+		prix_unitaire[1] = (_80gr[Qt1p]*coefP)*Quantite_pages
 	elif "90gr" in str(produit):
-		prix_unitaire[1] = _90gr[Qt1]*coefP
+		prix_unitaire[1] = (_90gr[Qt1p]*coefP)*Quantite_pages
 	elif "135gr" in str(produit):
-		prix_unitaire[1] = _135gr[Qt1]*coefP
-	elif "170gr" in str(produit):
-		prix_unitaire[1] = _170gr[Qt1]*coefP
-	elif "200gr" in str(produit):
-		prix_unitaire[1] = _200gr[Qt1]*coefP
-	elif "250gr" in str(produit):
-		prix_unitaire[1] = _250gr[Qt1]*coefP
-	elif "300gr" in str(produit):
-		prix_unitaire[1] = _300gr[Qt1]*coefP
+		prix_unitaire[1] = (_135gr[Qt1p]*coefP)*Quantite_pages
+
+
+	if "300gr" in str(produit):
+		prix_unitaire[2] = _300gr[Qt1]*coefP
 	elif "350gr" in str(produit):
-		prix_unitaire[1] = _350gr[Qt1]*coefP
+		prix_unitaire[2] = _350gr[Qt1]*coefP
 	else:
-		prix_unitaire[1] = 0
+		prix_unitaire[2] = 0
 
 	# Attribut type d'impression
 		
-	if "recto" in str(produit) and "quadri" in str(produit):
-		prix_unitaire[2] = recto_quadri[Qt1]
+	if "recto/verso" in str(produit) and "quadri" in str(produit):
+		prix_unitaire[3] = rv_quadri[Qt1]
 	else:
-		prix_unitaire[0] = 0
+		prix_unitaire[3] = 0
 
 	# Attribut finition
 
@@ -143,8 +142,9 @@ def mise_en_forme(produit):
 for record in self:
 	if record.x_studio_val_fontion == 0:
 		produit = record['name']
+		pages = record['x_studio_nbr_pages']
 		quantite = int(record['product_uom_qty'])
-		prix = calcul_prix(produit, quantite)
+		prix = calcul_prix(produit, quantite,pages)
 		nomt = mise_en_forme(produit)
 		record['price_unit'] = prix
 		record['name'] = nomt
