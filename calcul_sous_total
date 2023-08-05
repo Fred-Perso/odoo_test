@@ -1,0 +1,6 @@
+for record in self:
+  p_total = record['x_studio_c_sous_total']
+  qt = record['product_uom_qty']
+  record['price_unit'] = p_total/qt
+
+# dependance : product_uom_qty,price_unit,x_studio_c_sous_total
